@@ -9,7 +9,7 @@ export default function Home() {
     const token = await Services.getData("login");
     console.log(token);
     if (!token) {
-      // router.push("/login");
+      router.push("/login");
     }
   };
   
