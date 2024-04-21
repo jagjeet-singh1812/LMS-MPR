@@ -1,9 +1,45 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  ToastAndroid,
+  Linking,
+} from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "../Utils/Colors";
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
-export default function ItemList({ data }) {
+import { supabase } from "../Utils/Config";
+export default function ItemList({ data, re }) {
+  const { category_id } = useLocalSearchParams();
+  const [expand, setexpand] = useState(0);
+  const [id, setid] = useState(0);
+
+  const handledelete = async () => {
+    const { error } = await supabase
+      .from("Categoryitems")
+      .delete()
+      .eq("id", id);
+      console.log(error)
+    if (!error) {
+       re(true);
+      ToastAndroid.show("Item Deleted", ToastAndroid.SHORT);
+    }
+  };
+  const openurl = (url) => {
+    if (url) {
+      Linking.openURL(url);
+    }
+  };
+  useEffect(() => {
+    console.log(data);
+  }, []);
+  const router = useRouter();
   return (
     <View style={{ height: "75%" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -12,7 +48,14 @@ export default function ItemList({ data }) {
           {data.length ? (
             data.map((item, ind) => (
               <View key={ind}>
-                <View key={item.id} style={styles.itemContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setexpand(ind);
+                    setid(item.id);
+                  }}
+                  key={item.id}
+                  style={styles.itemContainer}
+                >
                   <View style={styles.cc}>
                     {item.icon ? (
                       <Image
@@ -24,7 +67,11 @@ export default function ItemList({ data }) {
                         onLoadEnd={() => console.log("Image Loaded")}
                       />
                     ) : (
-                      <Text style={{ width: "25%" ,marginTop:10,marginLeft:10}}>No Image</Text>
+                      <Text
+                        style={{ width: "25%", marginTop: 10, marginLeft: 10 }}
+                      >
+                        No Image
+                      </Text>
                     )}
                     <View style={styles.ss}>
                       <Text
@@ -36,7 +83,9 @@ export default function ItemList({ data }) {
                       >
                         {item.name}
                       </Text>
-                      <Text style={{color:Colors.darkgrey,width:'80%'}}>{item.url}</Text>
+                      <Text style={{ color: Colors.darkgrey, width: "80%" }}>
+                        {item.url}
+                      </Text>
                     </View>
                   </View>
                   <View
@@ -51,13 +100,37 @@ export default function ItemList({ data }) {
                       ₹ {item.cost}
                     </Text>
                   </View>
-                </View>
+                </TouchableOpacity>
+                {expand == ind && (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                      backgroundColor: Colors.gray,
+                      borderWidth: 1,
+                      borderRadius: 25,
+                      padding: 10,
+                    }}
+                  >
+                    <TouchableOpacity onPress={() => handledelete()}>
+                      <MaterialIcons name="delete" size={34} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>openurl(item.url)}>
+                      <FontAwesome
+                        name="external-link"
+                        size={34}
+                        color="black"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                )}
                 {data.length - 1 !== ind && (
                   <View
                     style={{
                       // borderWidth: 1,
                       marginTop: 10,
-                      marginBottom:10,
+                      marginBottom: 10,
                       borderColor: Colors.darkgrey,
                     }}
                   ></View>
@@ -81,9 +154,17 @@ export default function ItemList({ data }) {
           )}
         </View>
       </ScrollView>
-      <Link href={"/Add_item"} style={styles.adbtn}>
+      <TouchableOpacity
+        onPress={() => {
+          router.replace({
+            pathname: "/Add_item",
+            params: { category_id: category_id },
+          });
+        }}
+        style={styles.adbtn}
+      >
         <AntDesign name="pluscircle" size={60} color={Colors.primary} />
-      </Link>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -121,7 +202,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 15,
     alignContent: "center",
-      height:'auto'
+    height: "auto",
   },
   image: {
     width: 100,

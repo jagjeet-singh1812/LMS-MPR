@@ -184,7 +184,23 @@ export default function Category_Details() {
           ></View>
         )}
       </View>
-      <ItemList data={Datacat}></ItemList>
+      {totalprice > whole.assigned_budget && (
+        <View
+          style={{
+            backgroundColor: Colors.red,
+            borderRadius: 10,
+            padding: 5,
+            marginTop: 10,
+            width:'25%',
+            position:'absolute',
+            right:0,
+            top:'30%'
+          }}
+        >
+          <Text style={{color:Colors.White}}>OverBuget</Text>
+        </View>
+      )}
+      <ItemList data={Datacat} re={() => fetchcategoryitems()}></ItemList>
     </View>
   );
 }
