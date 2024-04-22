@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   Linking,
+  Alert,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -21,23 +22,32 @@ export default function ItemList({ data, re }) {
   const [id, setid] = useState(0);
 
   const handledelete = async () => {
+    console.log(id);
+    console.log(expand);
     const { error } = await supabase
       .from("Categoryitems")
       .delete()
       .eq("id", id);
-      console.log(error)
+    console.log(error);
     if (!error) {
-       re(true);
+      re(true);
       ToastAndroid.show("Item Deleted", ToastAndroid.SHORT);
     }
   };
   const openurl = (url) => {
     if (url) {
-      Linking.openURL(url);
+      const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+      if (urlPattern.test(url)) {
+        Linking.openURL(url);
+      } else {
+        Alert.alert("Invalid URL", "Please enter a valid URL for the item.");
+      }
     }
   };
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
+    console.log(id);
+    console.log(expand);
   }, []);
   const router = useRouter();
   return (
@@ -84,7 +94,7 @@ export default function ItemList({ data, re }) {
                         {item.name}
                       </Text>
                       <Text style={{ color: Colors.darkgrey, width: "80%" }}>
-                        {item.url}
+                        {item.note}
                       </Text>
                     </View>
                   </View>
@@ -116,7 +126,22 @@ export default function ItemList({ data, re }) {
                     <TouchableOpacity onPress={() => handledelete()}>
                       <MaterialIcons name="delete" size={34} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>openurl(item.url)}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        router.replace({
+                          pathname: "/Updateitem",
+                          params: { category_id: category_id,nm:item.name,ct:item.cost,urll:item.url,notex:item.note,ic:item.icon,id:item.id},
+                        });
+                      }}
+                    >
+                      <FontAwesome
+                        name="pencil-square-o"
+                        size={34}
+                        color="black"
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => openurl(item.url)}>
                       <FontAwesome
                         name="external-link"
                         size={34}

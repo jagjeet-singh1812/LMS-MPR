@@ -21,6 +21,14 @@ export default function _layout() {
           headerTitle: "Add New Item",
         }}
       />
+       <Stack.Screen
+        name="Updateitem/index"
+        options={{
+          headerShown: true,
+          presentation: "modal",
+          headerTitle: "Update Item",
+        }}
+      />
     </Stack>
   );
 }

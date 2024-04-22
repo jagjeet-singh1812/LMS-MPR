@@ -8,7 +8,7 @@ const router=useRouter();
       title: "PDF Merge",
       description: "Merge multiple PDF files into one.",
       icon: require("../../assets/pdf_merge.png"),
-      onPress: () => router.push("PDFMerge"),
+      onPress: () => router.push("PdfMerge"),
     },
     {
       title: "Expense Tracker",
@@ -20,7 +20,7 @@ const router=useRouter();
       title: "YouTube Summarizer",
       description: "Summarize YouTube videos.",
       icon: require("../../assets/summar.png"),
-      onPress: () => router.push("YouTubeSummarizer"),
+      onPress: () => router.push("Youtubesummary"),
     },
   ];
 
