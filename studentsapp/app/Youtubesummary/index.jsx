@@ -18,7 +18,7 @@ export default function YouTubeSummarizer() {
   const API_KEY = "AIzaSyAqu8gVHmRu4z0ZR3CszNf1n6dScysDkJ4";
 
   const genAI = new GoogleGenerativeAI(API_KEY);
-   const [changedit, setchangedit] = useState(false);
+  const [changedit, setchangedit] = useState(false);
   const [textd, settext] = useState("");
   const [sum, setSum] = useState("");
   const [t, st] = useState(false);
@@ -31,9 +31,8 @@ export default function YouTubeSummarizer() {
         },
       })
       .then((response) => {
-        console.log(response);
-        setSum("Response:", response.data.text);
-        summarizeText(response.data.text);
+        console.log(response.data.text);
+        setSum(response.data.text);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -60,23 +59,24 @@ export default function YouTubeSummarizer() {
       console.error("Error speaking text:", error);
     }
   };
-  
+
   const stopSpeaking = () => {
-      Speech.stop();
+    Speech.stop();
   };
-  
-  
-  
+
   const summarizeText = async (text) => {
     try {
       st(false);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-      const prompt = `give summary of the text such that could be understand by 5 years child the text is ${text}.`;
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const textt = response.text();
-      console.log(textt);
-      settext(textt);
+      if (text) {
+        const prompt = `give summary of the text such that could be understand by 5 years child the text is ${text}.`;
+        const result = await model.generateContent(prompt);
+        const response = result.response;
+        const textt = response.text();
+        console.log(textt);
+        speak(textt);
+        settext(textt);
+      }
       st(true);
     } catch (error) {
       console.error("Error generating summary:", error.message);
@@ -93,29 +93,19 @@ export default function YouTubeSummarizer() {
     return match ? match[1] : null;
   };
 
- 
-
   const fetchThumbnailAndSummary = async () => {
     setLoading(true);
-    // stopSpeaking();
-    const id = extractVideoId(videoIdx);
+    settext("");
+    const id = await extractVideoId(videoIdx);
     console.log(id);
     try {
       await genSum(id);
-      //   const response =genSum(id);
-      //   const { thumbnailUrl, videoSummary } = response.data;
       await summarizeText(sum);
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
-      speak(textd);
+      // speak(textd);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-     
     }
   };
 
@@ -152,12 +142,11 @@ export default function YouTubeSummarizer() {
         <ActivityIndicator size="large" color="#007bff" style={styles.loader} />
       ) : (
         <>
-          <ScrollView showsVerticalScrollIndicator={false} style={{height:'50%'}}>
-            {textd ? (
-              <Animated.Text style={[styles.summary, { opacity: fadeAnim }]}>
-                {textd}
-              </Animated.Text>
-            ) : null}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ height: "50%" }}
+          >
+            {textd ? <Text style={[styles.summary]}>{textd}</Text> : null}
           </ScrollView>
         </>
       )}

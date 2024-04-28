@@ -23,10 +23,10 @@ export default function Login() {
   ];
 
   const handlesignin=async()=>{
-    await Services.storeData("login","true");
-    await Services.storeData("email","sappaljagjeet@gmail.com");
-    alert("You have login in successfully");
-    router.push('/');
+    // await Services.storeData("login","true");
+    // await Services.storeData("email","sappaljagjeet@gmail.com");
+    // alert("You have login in successfully");
+    router.push('/Loginform');
   }
   return (
     <View style={styles.container}>
@@ -34,7 +34,7 @@ export default function Login() {
       <View style={styles.overlay}>
         <Text style={styles.title}>StudApp</Text>
         <Text style={styles.subtitle}>
-          Streamline Your Student Life: Your All-in-One Study Companion!
+           Your All-in-One Companion!
         </Text>
         <TouchableOpacity style={styles.button} onPress={()=>handlesignin()}>
           <Text style={styles.buttonText}>Login/Signup</Text>
@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
     height: "100%",
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    marginTop: -60,
+    marginTop: -70,
     padding: 20,
     alignItems: "center",
   },
   title: {
-    color: Colors.Primary,
+    color: Colors.White,
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",

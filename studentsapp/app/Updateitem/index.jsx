@@ -22,7 +22,7 @@ import { supabase } from "../../Utils/Config";
 import { Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 export default function Update_item() {
-  const { category_id,nm,ct,urll,notex,ic,id} = useLocalSearchParams();
+  const { category_id, nm, ct, urll, notex, ic, id } = useLocalSearchParams();
   const [loading, setloading] = useState(false);
   const [selectedimage, setselectedimage] = useState(
     "https://t3.ftcdn.net/jpg/04/60/01/36/240_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg"
@@ -30,7 +30,7 @@ export default function Update_item() {
   const [selectedimage2, setselectedimage2] = useState(
     "https://t3.ftcdn.net/jpg/04/60/01/36/240_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg"
   );
-  let url=
+  let url =
     "https://yjdzxpauugigjlpzomoo.supabase.co/storage/v1/object/sign/Items_Image/";
   const [Name, setName] = useState("");
   const [cost, setcost] = useState(0);
@@ -38,12 +38,12 @@ export default function Update_item() {
   const [uri, seturi] = useState("");
   const [Loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log(nm,ct,urll,notex,ic,id);
+    console.log(nm, ct, urll, notex, ic, id);
     setName(nm);
     setcost(ct);
     seturi(urll);
     setnote(notex);
-    setselectedimage(ic)
+    setselectedimage(ic);
   }, []);
 
   const addit = async () => {
@@ -58,9 +58,7 @@ export default function Update_item() {
     if (data) console.log(data);
     else console.log("error", error);
   };
- 
 
-  
   const handleUpdate = async () => {
     setLoading(true);
 
@@ -70,9 +68,10 @@ export default function Update_item() {
         name: Name,
         cost: cost,
         note: note,
-        url: uri
+        url: uri,
       })
-      .eq("id", id).select();
+      .eq("id", id)
+      .select();
 
     if (data) {
       ToastAndroid.show("Item Updated", ToastAndroid.SHORT);
@@ -175,12 +174,9 @@ export default function Update_item() {
             ></TextInput>
           </View>
 
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleUpdate()}
-          >
+          <TouchableOpacity style={styles.btn} onPress={() => handleUpdate()}>
             {loading && <ActivityIndicator size="large" color={Colors.White} />}
-            <Text style={styles.texty}>Add</Text>
+            <Text style={styles.texty}>Update</Text>
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>

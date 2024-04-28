@@ -5,8 +5,8 @@ export default function UtilityPage() {
 const router=useRouter();
   const features = [
     {
-      title: "PDF Merge",
-      description: "Merge multiple PDF files into one.",
+      title: "AI Assistant",
+      description: "Get answers to your queries.",
       icon: require("../../assets/pdf_merge.png"),
       onPress: () => router.push("PdfMerge"),
     },

@@ -29,6 +29,24 @@ export default function _layout() {
           headerTitle: "Update Item",
         }}
       />
+      <Stack.Screen name="Chatscreen/index"
+      options={{
+        headerShown:true,
+        presentation:"modal",
+      headerTitle:"Chat with us !!!"
+      }} />
+       <Stack.Screen name="Cgpa"
+      options={{
+        headerShown:true,
+        presentation:"modal",
+      headerTitle:"CGPA Details"
+      }} />
+       <Stack.Screen name="Link"
+      options={{
+        headerShown:true,
+        presentation:"modal",
+      headerTitle:"All Important Links"
+      }} />
     </Stack>
   );
 }
