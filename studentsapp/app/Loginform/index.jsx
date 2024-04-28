@@ -111,7 +111,7 @@ const Login = () => {
             await AsyncStorage.setItem('userId', (response.data.id));
             await Services.storeData('login', 'true');
             await Services.storeData('email', response.data.email);
-            Alert.alert("Successful", response.data.id);
+            Alert.alert("Successfull Login !!!");
             pushnotify()
             Router.push('/(tabs)')
         } catch (error) {

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../Utils/global";
 import imgg from "../assets/lavdu.jpg"
+import Colors from "../Utils/Colors";
 const Middle = () => {
     const navigation = useNavigation();
 
@@ -111,13 +112,13 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-evenly",
         marginTop: 40,
-        backgroundColor: "#dbdbdb",
+        backgroundColor: Colors.gray,
         borderRadius: 10,
         padding: 10
     },
     dataText: {
         fontSize: 20,
-        color: "black",
+        color: Colors.Black,
         fontWeight: "400",
         marginTop: 7,
         marginBottom: 7,

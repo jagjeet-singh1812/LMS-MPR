@@ -22,6 +22,12 @@ const router=useRouter();
       icon: require("../../assets/summar.png"),
       onPress: () => router.push("Youtubesummary"),
     },
+    // {
+    //   title: "Pdf Merger",
+    //   description: "Upload your pdf and enjoy.",
+    //   icon: require("../../assets/summar.png"),
+    //   onPress: () => router.push("pdff"),
+    // },
   ];
 
   return (
