@@ -11,6 +11,7 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import { BASE_URL } from "../../Utils/global";
 import axios from "axios";
 import * as Speech from "expo-speech";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -25,7 +26,7 @@ export default function YouTubeSummarizer() {
   const [speakingTask, setSpeakingTask] = useState(null);
   const genSum = async (video_id) => {
     await axios
-      .get(`http://192.168.1.8:3001//?video_id=${video_id}`, {
+      .get(`http://${BASE_URL}?video_id=${video_id}`, {
         headers: {
           "Content-Type": "application/json",
         },

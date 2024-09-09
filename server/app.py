@@ -3,9 +3,6 @@ from flask_cors import CORS
 from youtube_transcript_api import YouTubeTranscriptApi as yta
 import google.generativeai as genai
 
-
-
-
 from flask import Flask,request,jsonify
 from flask_cors import CORS
 from flask_pymongo import pymongo
