@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-const API_KEY = "AIzaSyAqu8gVHmRu4z0ZR3CszNf1n6dScysDkJ4";
+const API_KEY = process.env.gkey;
 const BASE_URL = "http://192.168.1.8:3001/aibot";
 const genAI = new GoogleGenerativeAI(API_KEY);
 const getBardApi = async (userMsg, name, desc) => {
