@@ -16,7 +16,7 @@ import axios from "axios";
 import * as Speech from "expo-speech";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 export default function YouTubeSummarizer() {
-  const API_KEY = "AIzaSyAqu8gVHmRu4z0ZR3CszNf1n6dScysDkJ4";
+  const API_KEY = process.env.gkey
 
   const genAI = new GoogleGenerativeAI(API_KEY);
   const [changedit, setchangedit] = useState(false);
